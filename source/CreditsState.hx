@@ -29,7 +29,6 @@ class CreditsState extends MusicBeatState
 	private var creditsStuff:Array<Array<String>> = [];
 
 	var bg:FlxSprite;
-	var descBox:FlxSprite;	
 	var descText:FlxText;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
@@ -63,38 +62,17 @@ class CreditsState extends MusicBeatState
 				}
 				creditsStuff.push(['']);
 			}
-		};
-		var folder = "";
-			var creditsFile:String = Paths.mods('data/credits.txt');
-			if (FileSystem.exists(creditsFile))
-			{
-				var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
-				for(i in firstarray)
-				{
-					var arr:Array<String> = i.replace('\\n', '\n').split("::");
-					if(arr.length >= 5) arr.push(folder);
-					creditsStuff.push(arr);
-				}
-				creditsStuff.push(['']);
-			}
+		}
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			['Psych Engine Android'],
-			['M.A. Jigsaw',		    'majigsaw',		    'Main Coder of The Port',	 'https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ',	    'F73838'],
-			['Psych Engine Team'],
-			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',						'https://twitter.com/Shadow_Mario_',	'444444'],
-			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',					'https://twitter.com/river_oaken',		'C30085'],
-			['bb-panzu',			'bb-panzu',			'Additional Programmer of Psych Engine',				'https://twitter.com/bbsub3',			'389A58'],
 			[''],
-			['Engine Contributors'],
-			['shubs',				'shubs',			'New Input System Programmer',							'https://twitter.com/yoshubs',			'4494E6'],
-			['SqirraRNG',			'gedehari',			'Chart Editor\'s Sound Waveform base',					'https://twitter.com/gedehari',			'FF9300'],
-			['iFlicky',				'iflicky',			'Delay/Combo Menu Song Composer\nand Dialogue Sounds',	'https://twitter.com/flicky_i',			'C549DB'],
-			['PolybiusProxy',		'polybiusproxy',	'.MP4 Video Loader Extension',							'https://twitter.com/polybiusproxy',	'FFEAA6'],
-			['Keoiki',				'keoiki',			'Note Splash Animations',								'https://twitter.com/Keoiki_',			'FFFFFF'],
+			['Plus Engine Team'],
+			['Speky',		'speky',		'Main Programmer and Artist of Plus Engine',						'https://www.youtube.com/channel/UC5eRTSerDjVEnwyg-OYyYjg',	'FFDD33'],
+			['Ericko',			'ericko',		'Additional Programmer of Plus Engine',					'https://www.youtube.com/channel/UCsFehO9Np6EHqIb635YAYLA',		'C30085'],
+			['Infrnk',			'infrnk',			'Additional Artist of Plus Engine',				'https://www.youtube.com/channel/UCY-6lrL-DHdKuZ-5u0lkVVg/about',			'389A58'],
 			[''],
-			["Funkin' Crew"],
+			["Creators of Friday Night Funkin"],
 			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",					'https://twitter.com/ninja_muffin99',	'F73838'],
 			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",						'https://twitter.com/PhantomArcade3K',	'FFBB1B'],
 			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",						'https://twitter.com/evilsk8r',			'53E52C'],
@@ -139,10 +117,6 @@ class CreditsState extends MusicBeatState
 			}
 		}
 
-	    descBox = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-		descBox.alpha = 0.6;
-		add(descBox);
-
 		descText = new FlxText(50, 600, 1180, "", 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.scrollFactor.set();
@@ -153,9 +127,9 @@ class CreditsState extends MusicBeatState
 		intendedColor = bg.color;
 		changeSelection();
 
-        #if android
-		addVirtualPad(UP_DOWN, A_B);
-		#end
+		#if mobileC
+        addVirtualPad(UP_DOWN, A_B);
+        #end
 
 		super.create();
 	}
@@ -232,12 +206,6 @@ class CreditsState extends MusicBeatState
 			}
 		}
 		descText.text = creditsStuff[curSelected][2];
-		descText.screenCenter(Y);
-		descText.y += 270;
-
-		descBox.setPosition(descText.x - 10, descText.y - 10);
-		descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
-		descBox.updateHitbox();
 	}
 
 	function getCurrentBGColor() {
